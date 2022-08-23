@@ -7,6 +7,7 @@ import br.com.crystaldata.forum.mapper.TopicoFormMapper
 import br.com.crystaldata.forum.mapper.TopicoViewMapper
 import br.com.crystaldata.forum.model.Topico
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.DeleteMapping
 import java.util.stream.Collectors
 
 @Service
@@ -48,5 +49,12 @@ class TopicoService(
                 dataCriacao = topico.dataCriacao
             )
         )
+    }
+
+    @DeleteMapping
+    fun deletar(id: Long) {
+        val topico = topicos.stream().filter { t -> t.id == id
+        }.findFirst().get()
+        topicos = topicos.minus(topico)
     }
 }
