@@ -1,11 +1,14 @@
 package br.com.crystaldata.forum.controller
 
+import br.com.crystaldata.forum.dto.NovoTopicoDto
 import br.com.crystaldata.forum.model.Curso
 import br.com.crystaldata.forum.model.Topico
 import br.com.crystaldata.forum.model.Usuario
 import br.com.crystaldata.forum.service.TopicoService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.Arrays
@@ -21,8 +24,11 @@ class TopicoController(private val service: TopicoService) {
 
     @GetMapping("/{id}")
     fun buscarPorId(@PathVariable id: Long): Topico {
-        return service.buscarPorId(id);
-
+        return service.buscarPorId(id)
     }
 
+    @PostMapping
+    fun cadastrar(@RequestBody dto: NovoTopicoDto) {
+        service.cadastrar(dto)
+    }
 }
