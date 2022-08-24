@@ -26,9 +26,7 @@ class TopicoService(
 
     fun buscarPorId(id: Long): TopicoView {
         val topico = topicos.stream().filter { t -> t.id == id }
-            .findFirst().orElseThrow{
-                NotFoundException(notFoundMessage)
-            }
+            .findFirst().orElseThrow { NotFoundException(notFoundMessage) }
         return topicoViewMapper.map(topico)
     }
 
@@ -41,29 +39,26 @@ class TopicoService(
 
     fun atualizar(form: AtualizacaoTopicoForm): TopicoView {
         val topico = topicos.stream().filter { t -> t.id == form.id }
-            .findFirst().orElseThrow{
-                NotFoundException(notFoundMessage)
-            }
+            .findFirst().orElseThrow { NotFoundException(notFoundMessage) }
         val topicoAtualizado = Topico(
-                id = form.id,
-                titulo = form.titulo,
-                mensagem = form.mensagem,
-                autor = topico.autor,
-                curso = topico.curso,
-                respostas = topico.respostas,
-                status = topico.status,
-                dataCriacao = topico.dataCriacao
-            )
+            id = form.id,
+            titulo = form.titulo,
+            mensagem = form.mensagem,
+            autor = topico.autor,
+            curso = topico.curso,
+            respostas = topico.respostas,
+            status = topico.status,
+            dataCriacao = topico.dataCriacao
+        )
         topicos = topicos.minus(topico).plus(topicoAtualizado)
         return topicoViewMapper.map(topico)
     }
 
     @DeleteMapping
     fun deletar(id: Long) {
-        val topico = topicos.stream().filter { t -> t.id == id
-        }.findFirst().orElseThrow{
-            NotFoundException(notFoundMessage)
-        }
+        val topico = topicos.stream().filter { t ->
+            t.id == id
+        }.findFirst().orElseThrow { NotFoundException(notFoundMessage) }
         topicos = topicos.minus(topico)
     }
 }
