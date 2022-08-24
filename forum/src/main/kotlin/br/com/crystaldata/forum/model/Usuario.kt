@@ -7,7 +7,6 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table(name="tb_usuario")
 data class Usuario(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,

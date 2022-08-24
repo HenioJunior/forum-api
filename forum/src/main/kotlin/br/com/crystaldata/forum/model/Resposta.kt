@@ -4,10 +4,9 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name="tb_resposta")
 data class Resposta(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long?,
+    var id: Long?,
     val mensagem: String,
     val dataResposta: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
