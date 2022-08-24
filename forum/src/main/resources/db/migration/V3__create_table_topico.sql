@@ -11,7 +11,7 @@ foreign key(curso_id) references curso(id),
 foreign key(autor_id) references usuario(id)
 );
 
-insert into topico(titulo, mensagem, data_criacao, status, autor_id, curso_id) values('Dúvida', 'Erro ao criar projeto', '2019-05-05 18:00:00', 'NAO_RESPONDIDO', 1, 1);
+insert into topico(titulo, mensagem, data_criacao, status, autor_id, curso_id) values('Dúvida', 'Erro ao criar projeto', '2019-05-05 18:00:00', 'NAO_RESPONDIDO', 1, 3);
 insert into topico(titulo, mensagem, data_criacao, status, autor_id, curso_id) values('Dúvida 2', 'Projeto não compila', '2019-05-05 19:00:00', 'NAO_RESPONDIDO', 1, 1);
 insert into topico(titulo, mensagem, data_criacao, status, autor_id, curso_id) values('Dúvida 3', 'Tag HTML', '2019-05-05 20:00:00', 'NAO_RESPONDIDO', 1, 2);
 

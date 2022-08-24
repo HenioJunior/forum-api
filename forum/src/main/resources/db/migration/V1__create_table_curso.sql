@@ -7,3 +7,4 @@ primary key(id)
 
 insert into curso(nome, categoria) values('Spring Boot', 'Programação');
 insert into curso(nome, categoria) values('HTML 5', 'Front-end');
+insert into curso(nome, categoria) values('Kotlin', 'Programacao');
