@@ -1,23 +1,14 @@
 package br.com.crystaldata.forum.service
 
 import br.com.crystaldata.forum.model.Curso
+import br.com.crystaldata.forum.repository.CursoRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class CursoService(var cursos: List<Curso>) {
-
-    init {
-        val curso = Curso(
-            id = 1,
-            nome = "Kotlin",
-            categoria = "Programacao"
-        )
-        cursos = Arrays.asList(curso)
-    }
+class CursoService(val repository: CursoRepository) {
 
     fun buscaPorId(id: Long): Curso {
-        return cursos.stream().filter {c -> c.id == id}
-            .findFirst().get()
+        return repository.getOne(id)
     }
 }
