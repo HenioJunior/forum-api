@@ -4,6 +4,7 @@ import br.com.crystaldata.forum.dto.AtualizacaoTopicoForm
 import br.com.crystaldata.forum.dto.NovoTopicoForm
 import br.com.crystaldata.forum.dto.TopicoView
 import br.com.crystaldata.forum.service.TopicoService
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -20,6 +21,7 @@ import javax.validation.Valid
 class TopicoController(private val service: TopicoService) {
 
     @GetMapping
+    @Cacheable("topicos")
     fun listar(
         @RequestParam(required = false) nomeCurso: String?,
         @PageableDefault(size = 10, sort = ["dataCriacao"], direction = Sort.Direction.DESC) paginacao: Pageable
