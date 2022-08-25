@@ -2,6 +2,7 @@ package br.com.crystaldata.forum.service
 
 import br.com.crystaldata.forum.dto.AtualizacaoTopicoForm
 import br.com.crystaldata.forum.dto.NovoTopicoForm
+import br.com.crystaldata.forum.dto.TopicoPorCategoria
 import br.com.crystaldata.forum.dto.TopicoView
 import br.com.crystaldata.forum.exception.NotFoundException
 import br.com.crystaldata.forum.mapper.TopicoFormMapper
@@ -56,5 +57,9 @@ class TopicoService(
     @DeleteMapping
     fun deletar(id: Long) {
        repository.deleteById(id)
+    }
+
+    fun relatorio(): List<TopicoPorCategoria> {
+        return repository.relatorio()
     }
 }
