@@ -54,7 +54,6 @@ class TopicoService(
         return topicoViewMapper.map(topico)
     }
 
-    @DeleteMapping
     fun deletar(id: Long) {
        repository.deleteById(id)
     }

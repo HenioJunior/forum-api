@@ -7,31 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails
 class DetalhesUsuario(
     private val usuario: Usuario
 ): UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("Not yet implemented")
-    }
+    override fun getAuthorities() = null
 
-    override fun getPassword(): String {
-        TODO("Not yet implemented")
-    }
+    override fun getPassword() = usuario.password
 
-    override fun getUsername(): String {
-        TODO("Not yet implemented")
-    }
+    override fun getUsername() = usuario.email
 
-    override fun isAccountNonExpired(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isAccountNonExpired() = true
 
-    override fun isAccountNonLocked(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isAccountNonLocked() = true
 
-    override fun isCredentialsNonExpired(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isCredentialsNonExpired() = true
 
-    override fun isEnabled(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isEnabled(): Boolean = true
 }

@@ -28,5 +28,6 @@
 
    1. Implementar o método `loadUserByUsername` para buscar as informações do usuário no banco de dados;
    1. Criar a classe DetalhesUsuario, injetar o usuario, implementar a interface `UserDetails` e seus métodos;
+   1. Configurar os métodos da interface `UserDetails` na classe DetalhesUsuario; 
    
 
