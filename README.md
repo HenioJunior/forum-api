@@ -38,6 +38,13 @@
         return DetalhesUsuario(usuario)
     }
    ```  
+4. Na classe SecurityConfiguration, implementar o Password Encoder. Neste ponto, consigo fazer uma autenticação básica no endpoint
+   ```kotlin
+   @Bean
+    fun encoder(): PasswordEncoder? {
+        return BCryptPasswordEncoder()
+    }
+   ```
    
     
    
