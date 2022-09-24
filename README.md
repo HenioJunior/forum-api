@@ -34,7 +34,10 @@
    1. Implementar o método `loadUserByUsername` para buscar as informações do usuário no banco de dados;
    ```kotlin
    override fun loadUserByUsername(username: String?): UserDetails {
-        val usuario = repository.findByEmail(username) ?: throw NotFoundException(notFoundMessage)
+        
+        val usuario = repository.findByEmail(username) 
+        ?: throw NotFoundException(notFoundMessage)
+        
         return DetalhesUsuario(usuario)
     }
    ```  
@@ -45,6 +48,18 @@
         return BCryptPasswordEncoder()
     }
    ```
+
+5. Criar as Roles de usuário
+
+    1. Criar a classe Role;
+    1. Em migration, criar a tabela `usuario_role`;
+    1. Criar o atributo role na classe Usuario;
+    ```kotlin
+    @ManyToMany(fetch = FetchType.EAGER)//EAGER para carregar o usuario e todas as suas roles
+    @JoinColumn(name = "usuario_role")
+    @JsonIgnore
+    val role: List<Role> = mutableListOf()
+    ``` 
    
     
    

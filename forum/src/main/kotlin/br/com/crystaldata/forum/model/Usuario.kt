@@ -1,10 +1,7 @@
 package br.com.crystaldata.forum.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.Table
+import com.fasterxml.jackson.annotation.JsonIgnore
+import javax.persistence.*
 
 @Entity
 data class Usuario(
@@ -12,5 +9,10 @@ data class Usuario(
     val id: Long? = null,
     val nome: String,
     val email: String,
-    val password: String
+    val password: String,
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_role")
+    @JsonIgnore
+    val role: List<Role> = mutableListOf()
 )
