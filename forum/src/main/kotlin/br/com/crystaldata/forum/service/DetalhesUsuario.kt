@@ -1,7 +1,6 @@
 package br.com.crystaldata.forum.service
 
 import br.com.crystaldata.forum.model.Usuario
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class DetalhesUsuario(

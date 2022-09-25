@@ -66,6 +66,8 @@
    1. Implementar o método `getAuthority()` que vai receber o `nome`da Role ;
    2. Na classe `DetalhesUsuario` o método `getAuthorities()` vai receber `usuario.roles`;  
   
-    
+7. Implementado o endpoint para listar os Usuarios e suas Roles;
+
+8.  
    
 
