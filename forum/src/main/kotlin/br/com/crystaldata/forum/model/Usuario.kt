@@ -6,13 +6,15 @@ import javax.persistence.*
 @Entity
 data class Usuario(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Long,
     val nome: String,
     val email: String,
     val password: String,
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "usuario_role")
+    @JoinTable(name = "usuario_role",
+        joinColumns = [JoinColumn(name = "usuario_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")])
     @JsonIgnore
-    val role: List<Role> = mutableListOf()
+    val roles: List<Role> = mutableListOf()
 )

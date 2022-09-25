@@ -4,4 +4,4 @@ nome varchar(50) not null,
 primary key(id)
 );
 
-insert into role(nome) values('USER');
+insert into role(nome) values('LEITURA_ESCRITA');

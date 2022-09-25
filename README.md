@@ -50,17 +50,22 @@
    ```
 
 5. Criar as Roles de usuário
-
     1. Criar a classe Role;
     1. Em migration, criar a tabela `usuario_role`;
-    1. Criar o atributo role na classe Usuario;
+    1. Criar o atributo `roles` na classe Usuario;
     ```kotlin
     @ManyToMany(fetch = FetchType.EAGER)//EAGER para carregar o usuario e todas as suas roles
-    @JoinColumn(name = "usuario_role")
+    @JoinTable(name = "usuario_role",
+        joinColumns = [JoinColumn(name = "usuario_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")])
     @JsonIgnore
-    val role: List<Role> = mutableListOf()
+    val roles: List<Role> = mutableListOf()
     ``` 
-   
+    
+6. Implementar a interface `GrantedAuthority` na classe `Role`
+   1. Implementar o método `getAuthority()` que vai receber o `nome`da Role ;
+   2. Na classe `DetalhesUsuario` o método `getAuthorities()` vai receber `usuario.roles`;  
+  
     
    
 
