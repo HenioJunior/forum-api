@@ -5,3 +5,4 @@ primary key(id)
 );
 
 insert into role(nome) values('LEITURA_ESCRITA');
+insert into role(nome) values('LEITURA');

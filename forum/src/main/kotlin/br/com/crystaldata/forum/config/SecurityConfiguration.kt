@@ -17,12 +17,16 @@ class SecurityConfiguration {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeRequests { authz -> authz
-                    .anyRequest().authenticated()
+                .antMatchers("/topicos")
+                .hasAuthority("LEITURA_ESCRITA")
+                .anyRequest()
+                .authenticated()
             }
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .formLogin().disable().httpBasic()
+            .formLogin().disable()
+            .httpBasic()
         return http.build()
     }
 
