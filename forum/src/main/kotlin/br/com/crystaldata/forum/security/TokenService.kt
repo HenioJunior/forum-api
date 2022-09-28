@@ -30,4 +30,16 @@ class TokenService {
             .signWith(SignatureAlgorithm.HS256, secret)
             .compact()
     }
+
+    fun isTokenValido(token: String?): Boolean {
+        return try {
+            Jwts
+                .parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

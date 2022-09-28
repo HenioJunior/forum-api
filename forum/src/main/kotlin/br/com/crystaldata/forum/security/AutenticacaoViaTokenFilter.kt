@@ -17,6 +17,8 @@ class AutenticacaoViaTokenFilter(
     ) {
         val token = recuperarToken(request)
         println("TOKEN: $token")
+        val valido = tokenService.isTokenValido(token)
+        println("TOKEN VALIDO: $valido")
 
         filterChain.doFilter(request, response)
     }

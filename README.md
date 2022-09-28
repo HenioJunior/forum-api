@@ -179,11 +179,15 @@ val token = tokenService.gerarToken(authentication)
 1. Criação da classe `AutenticacaoViaTokenFilter(): OncePerRequestFilter()`;
 2. Implementando o método `doFilterInternal()`;
 ```kotlin
-    val token = recuperarToken(request)// Criar a função recuperarToken(1)
-            
-            filterChain.doFilter(request, response)
+     val token = recuperarToken(request)// Criar a função recuperarToken(3)
+        println("TOKEN: $token")
+        val valido = tokenService.isTokenValido(token) //Validar o token(4)
+        if(valido) {
+            autenticarCliente(token)//Autentica o cliente(5)
+        }
+        filterChain.doFilter(request, response)
 ```
-3. Implementar a função `recuperarToken`(1)
+3. Implementar a função `recuperarToken`
 ```kotlin
 private fun recuperarToken(request: HttpServletRequest): String? {
         val token = request.getHeader("Authorization")//Recuperar o token no cabeçalho
@@ -193,5 +197,26 @@ private fun recuperarToken(request: HttpServletRequest): String? {
     }
 ``` 
 
-   
+4. Implementar a função `isTokenValido`
+```kotlin
+fun isTokenValido(token: String?): Boolean {
+        return try {
+            Jwts
+            .parser()
+            .setSigningKey(secret)
+            .parseClaimsJws(token)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+```
 
+5. Em `SecurityConfiguration` adicionar o filtro de autenticação
+```kotlin
+.and()
+.addFilterBefore(AutenticacaoViaTokenFilter(//Rodar primeiro o nosso filtro
+    tokenService = tokenService,
+    usuarioRepository = usuarioRepository),
+    UsernamePasswordAuthenticationFilter::class.java)
+``` 
