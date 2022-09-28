@@ -102,5 +102,82 @@ fun authenticationManager(auth: AuthenticationConfiguration): AuthenticationMana
     return auth.authenticationManager
 }
 ```
+
+#### Em `AutenticacaoController`
+
+1. Injeto o `AuthenticationManager` no construtor;
+```kotlin
+private val authManager: AuthenticationManager
+```
+2. Criar a função `converter` na classe `LoginForm`;
+```kotlin
+fun converter(): UsernamePasswordAuthenticationToken {
+        return UsernamePasswordAuthenticationToken(email, senha)//Uma implementação projetada para apresentação simples de um nome de usuário e senha
+    }
+``` 
+3. No método `autenticar`    
+```kotlin
+ @PostMapping
+    fun autenticar(@RequestBody @Valid form: LoginForm): ResponseEntity<TokenDto>{//Criar a classe TokenDto
+        val dadosLogin = val dadosLogin = form.converter() 
+        
+        try {
+            val authentication = authManager.authenticate(dadosLogin)
+            val token = tokenService.gerarToken(authentication)//Criar a classe TokenService e injetar na classe
+            return ResponseEntity.ok(TokenDto(token, "Bearer"))
+        } catch (e: AuthenticationException) {
+            return ResponseEntity.badRequest().build()
+        }
+    }
+```
+   1. O objeto do tipo`UsernamePasswordAuthenticationToken` vai receber como parâmetro o `email` e a `senha`;
+   2. `authManager.authenticate(dadosLogin)` é o método que fará a autenticação;
+   3. Tratamento de Exceção para o caso de login/senha inválidos;
+
+#### Geração do Token
+
+1. Criação da classe `TokenService`(anotar com `@Service`) e do método `gerarToken`
+
+```kotlin
+//Injeção dos atributos configurados em application.properties;
+@Value("\${forum.jwt.expiration}")
+lateinit var expiration: String
+
+@Value("\${forum.jwt.secret}")
+lateinit var secret: String
+
+fun gerarToken(authentication: Authentication): String {
+    //Recuperar o usuário que esta logado;
+    //Ele devolve um Object e com isso, é necessário o cast para DetalhesUsuario;
+    val usuarioLogado: DetalhesUsuario = authentication.principal as DetalhesUsuario
+    val hoje = Date()
+    val dataExpiracao = Date(hoje.time.plus(expiration.toLong()))
+    //Jwts.builder()é um método utilizado para construir o token;
+    return  Jwts.builder()
+        .setIssuer("Fórum API")
+        .setSubject(usuarioLogado.username)
+        .setIssuedAt(hoje)
+        .setExpiration(dataExpiracao)
+        .signWith(SignatureAlgorithm.HS256, secret)
+        //a propriedade compact() transforma para uma String;
+        .compact()
+    }
+``` 
+
+3. Em `AutenticacaoController`, no método `autenticar`
+```kotlin
+val token = tokenService.gerarToken(authentication)
+``` 
+
+#### Retornando o token para o cliente
+
+1. Criação do `TokenDto`;
+2. `return ResponseEntity.ok(TokenDto(token, "Bearer"))` devolvo um objeto(token) e informo o tipo de autenticação no corpo da resposta;
+
+#### Recuperando o token do header Authorization
+
+1. Criação da classe `AutenticacaoViaTokenFilter(): OncePerRequestFilter()`;
+2. Implementar o método `doFilterInternal()`;
+
    
 
