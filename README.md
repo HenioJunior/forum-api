@@ -177,7 +177,21 @@ val token = tokenService.gerarToken(authentication)
 #### Recuperando o token do header Authorization
 
 1. Criação da classe `AutenticacaoViaTokenFilter(): OncePerRequestFilter()`;
-2. Implementar o método `doFilterInternal()`;
+2. Implementando o método `doFilterInternal()`;
+```kotlin
+    val token = recuperarToken(request)// Criar a função recuperarToken(1)
+            
+            filterChain.doFilter(request, response)
+```
+3. Implementar a função `recuperarToken`(1)
+```kotlin
+private fun recuperarToken(request: HttpServletRequest): String? {
+        val token = request.getHeader("Authorization")//Recuperar o token no cabeçalho
+        return if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
+            return null
+        } else token.substring(7, token.length)
+    }
+``` 
 
    
 

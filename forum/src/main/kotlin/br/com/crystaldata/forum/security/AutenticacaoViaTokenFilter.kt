@@ -15,6 +15,16 @@ class AutenticacaoViaTokenFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        TODO("Not yet implemented")
+        val token = recuperarToken(request)
+        println("TOKEN: $token")
+
+        filterChain.doFilter(request, response)
+    }
+
+    private fun recuperarToken(request: HttpServletRequest): String? {
+        val token = request.getHeader("Authorization")//Recuperar o token no cabeçalho
+        return if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
+            return null
+        } else token.substring(7, token.length)
     }
 }
