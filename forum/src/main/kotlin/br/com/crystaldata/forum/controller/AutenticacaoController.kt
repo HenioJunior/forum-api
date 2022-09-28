@@ -1,6 +1,6 @@
 package br.com.crystaldata.forum.controller
 
-import br.com.crystaldata.forum.config.TokenService
+import br.com.crystaldata.forum.security.TokenService
 import br.com.crystaldata.forum.dto.LoginForm
 import br.com.crystaldata.forum.dto.TokenDto
 import org.springframework.http.ResponseEntity
