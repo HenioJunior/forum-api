@@ -42,4 +42,13 @@ class TokenService {
             false
         }
     }
+
+    fun getUsuario(token: String?): String {
+        val claims = Jwts
+            .parser()
+            .setSigningKey(secret)
+            .parseClaimsJws(token)
+            .body
+        return claims.subject
+    }
 }

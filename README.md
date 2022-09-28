@@ -105,7 +105,7 @@ fun authenticationManager(auth: AuthenticationConfiguration): AuthenticationMana
 
 #### Em `AutenticacaoController`
 
-1. Injeto o `AuthenticationManager` no construtor;
+1. Injeto o `AuthenticationManager` no construtor; //Disparo o processo de autenticação
 ```kotlin
 private val authManager: AuthenticationManager
 ```
@@ -183,7 +183,7 @@ val token = tokenService.gerarToken(authentication)
         println("TOKEN: $token")
         val valido = tokenService.isTokenValido(token) //Validar o token(4)
         if(valido) {
-            autenticarCliente(token)//Autentica o cliente(5)
+            autenticarCliente(token)//Autentica o cliente(6)
         }
         filterChain.doFilter(request, response)
 ```
@@ -220,3 +220,23 @@ fun isTokenValido(token: String?): Boolean {
     usuarioRepository = usuarioRepository),
     UsernamePasswordAuthenticationFilter::class.java)
 ``` 
+
+6. Implementar a função `autenticarCliente`
+```kotlin
+private fun autenticarCliente(token: String?) {
+        val usuarioToken: String = tokenService.getUsuario(token)//(7)
+        val usuario: Usuario? = usuarioRepository.findByEmail(usuarioToken)
+        val authentication = UsernamePasswordAuthenticationToken(usuario, null, usuario?.authorities)
+        SecurityContextHolder 
+        .getContext()
+        .authentication = authentication
+    }
+```
+
+7. Criar a função `getUsuario`
+```kotlin
+fun getUsuario(token: String?): String {
+    val claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body
+    return claims.subject
+    }
+```
