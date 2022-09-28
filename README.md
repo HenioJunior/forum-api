@@ -140,16 +140,16 @@ fun converter(): UsernamePasswordAuthenticationToken {
 
 ```kotlin
 //Injeção dos atributos configurados em application.properties;
-@Value("\${forum.jwt.expiration}")
+@Value("\${jwt.expiration}")
 lateinit var expiration: String
 
-@Value("\${forum.jwt.secret}")
+@Value("\${jwt.secret}")
 lateinit var secret: String
 
 fun gerarToken(authentication: Authentication): String {
     //Recuperar o usuário que esta logado;
-    //Ele devolve um Object e com isso, é necessário o cast para DetalhesUsuario;
-    val usuarioLogado: DetalhesUsuario = authentication.principal as DetalhesUsuario
+    //Ele devolve um Object e com isso, é necessário o cast para Usuario;
+    val usuarioLogado: Usuario = authentication.principal as Usuario
     val hoje = Date()
     val dataExpiracao = Date(hoje.time.plus(expiration.toLong()))
     //Jwts.builder()é um método utilizado para construir o token;
