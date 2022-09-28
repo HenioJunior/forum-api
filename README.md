@@ -240,3 +240,9 @@ fun getUsuario(token: String?): String {
     return claims.subject
     }
 ```
+
+#### Profiles
+
+mvn spring-boot:run
+
+mvn spring-boot:run -D spring-boot.run.profiles=test
