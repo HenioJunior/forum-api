@@ -2,6 +2,7 @@ package br.com.crystaldata.forum.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -16,7 +17,9 @@ class SecurityConfiguration {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .csrf().disable()
             .authorizeRequests { authz -> authz
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers("/topicos")
                 .hasAuthority("LEITURA_ESCRITA")
                 .anyRequest()
@@ -24,9 +27,7 @@ class SecurityConfiguration {
             }
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .formLogin().disable()
-            .httpBasic()
+
         return http.build()
     }
 

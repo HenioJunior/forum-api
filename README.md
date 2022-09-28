@@ -68,6 +68,39 @@
   
 7. Implementado o endpoint para listar os Usuarios e suas Roles;
 
-8.  
+### Configurando a autenticação Stateless
+
+1. Instalação da biblioteca jjwt;
+```xml
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.9.1</version>
+</dependency>
+```
+2. Em `SecurityConfiguration` vou remover o formLogin(), pois utilizaremos autenticação do tipo Stateless
+```kotlin
+.sessionManagement()
+    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//https://owasp.org/www-community/attacks/csrf
+    .and()
+    .csrf().disable()
+``` 
+
+3. Criação do `AutenticacaoController`
+
+   1. Criação do método `autenticar(@RequestBody @Valid form: LoginForm): ResponseEntity<?>`
+    - O objetivo deste método é pegar o login e a senha, autenticar no sistema(verificar no banco) e estando tudo ok eu gero o token;
+   2. Criação da classe DTO `LoginForm`;
+   3. Liberar o caminho `/auth` em SecurityConfigurations: ` .antMatchers("/auth").permitAll()`
+   
+#### No Spring, não é possível injetar automaticamente o `AuthenticationManager`
+   
+1. Em `SecurityConfiguration` criar o método `authenticationManager` e em seguida, injetar no construtor do `Controller`;
+```kotlin
+@Bean
+fun authenticationManager(auth: AuthenticationConfiguration): AuthenticationManager {
+    return auth.authenticationManager
+}
+```
    
 
