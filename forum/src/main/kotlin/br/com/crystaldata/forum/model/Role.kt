@@ -10,7 +10,7 @@ import javax.persistence.Table
 @Entity
 data class Role(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
     val nome: String,
 ) : GrantedAuthority {
 

@@ -246,3 +246,25 @@ fun getUsuario(token: String?): String {
 mvn spring-boot:run
 
 mvn spring-boot:run -D spring-boot.run.profiles=test
+
+
+#### Testes de unidade
+
+Dependencia do MockK
+```xml
+<dependency>
+    <groupId>com.ninja-squad</groupId>
+    <artifactId>springmockk</artifactId>
+    <version>3.1.1</version>
+    <scope>test</scope>
+</dependency>
+```
+Dependencia do AssertJ
+```xml
+<dependency>
+    <groupId>org.assertj</groupId>
+    <artifactId>assertj-core</artifactId>
+    <version>3.23.1</version>
+    <scope>test</scope>
+</dependency>
+```
