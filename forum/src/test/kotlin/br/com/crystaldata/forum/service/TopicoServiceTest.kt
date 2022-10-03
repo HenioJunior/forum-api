@@ -52,4 +52,14 @@ class TopicoServiceTest {
         verify(exactly = 1) { topicoViewMapper.map(any()) }
         verify(exactly = 1) { topicoRepository.findAll(paginacao) }
     }
+
+    @Test
+    fun `deve lancar not found exception quando nao achar o id do topico`() {
+        every { topicoRepository.findById(any())} returns Optional.empty()
+
+        val atual = assertThrows<NotFoundException> {
+            topicoService.buscarPorId(1)
+        }
+        assertThat(atual.message).isEqualTo("Topico não encontrado")
+    }
 }
