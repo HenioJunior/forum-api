@@ -268,3 +268,12 @@ Dependencia do AssertJ
     <scope>test</scope>
 </dependency>
 ```
+1. Teste do método listar
+
+- Em TopicoServiceTest, preciso simular o mesmo comportamento do repository `repository.findByCursoNome(nomeCurso, paginacao)`
+```kotlin
+val topicoRepository: TopicoRepository = mockk {
+        every { findByCursoNome(any(), any()) } //toda vez que o topicoRepository chamar o find... passando qualquer parâmetro any()
+        returns topicos
+    }
+``` 
