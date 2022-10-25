@@ -4,7 +4,9 @@
 
 1. Utilizar as anotações de classe: `@EnableWebSecurity` e `@Configuration`
 
-2. Criação do método de autorização(Bloquear ou Liberar recursos):
+- A classe extende `SecurityFilterChain`
+
+2. Criação do método de autorização(Liberar recursos):
 ```kotlin
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -22,37 +24,35 @@
 
 ### Implementar a autenticação
 
-1. No projeto, incluir o atributo `password` na classe Usuario, alterar a tabela no banco e inserir o password
 
-2. Criar a classe DetalhesUsuario, injetar o usuario, implementar a interface `UserDetails` e seus métodos; 
-
-    1. Configurar os métodos da interface `UserDetails` na classe DetalhesUsuario;
-
-3. Implementar a interface `UserDetailsService` na classe UsuarioService
+1. Implementar a interface `UserDetails` e seus métodos na classe `Usuario`; 
+  
+2. Implementar a interface `UserDetailsService` na classe `UsuarioService`;
 
    1. Implementar a assinatura do método `findByEmail` em UsuarioRepository
+   
    1. Implementar o método `loadUserByUsername` para buscar as informações do usuário no banco de dados;
    ```kotlin
    override fun loadUserByUsername(username: String?): UserDetails {
-        
-        val usuario = repository.findByEmail(username) 
-        ?: throw NotFoundException(notFoundMessage)
-        
-        return DetalhesUsuario(usuario)
+        return repository.findByEmail(username)
+        ?: throw ResourceNotFoundException("Usuario não encontrado")
     }
    ```  
-4. Na classe SecurityConfiguration, implementar o Password Encoder. Neste ponto, consigo fazer uma autenticação básica no endpoint
+3. Na classe SecurityConfiguration, implementar o Password Encoder.
    ```kotlin
    @Bean
     fun encoder(): PasswordEncoder? {
         return BCryptPasswordEncoder()
     }
    ```
+  
+- Neste ponto, consigo fazer uma autenticação básica no endpoint
 
-5. Criar as Roles de usuário
+
+4. Criar as Roles de usuário
     1. Criar a classe Role;
-    1. Em migration, criar a tabela `usuario_role`;
-    1. Criar o atributo `roles` na classe Usuario;
+    2. Em migration, criar a tabela `usuario_role`;
+    3. Criar o atributo `roles` na classe Usuario;
     ```kotlin
     @ManyToMany(fetch = FetchType.EAGER)//EAGER para carregar o usuario e todas as suas roles
     @JoinTable(name = "usuario_role",
@@ -62,11 +62,11 @@
     val roles: List<Role> = mutableListOf()
     ``` 
     
-6. Implementar a interface `GrantedAuthority` na classe `Role`
-   1. Implementar o método `getAuthority()` que vai receber o `nome`da Role ;
-   2. Na classe `DetalhesUsuario` o método `getAuthorities()` vai receber `usuario.roles`;  
+5. Implementar a interface `GrantedAuthority` na classe `Role`
+   1. Implementar o método `getAuthority()` que vai receber o nome da `Role` ;
+   2. Na classe `Usuario` o método `getAuthorities()` vai receber `usuario.roles`;  
   
-7. Implementado o endpoint para listar os Usuarios e suas Roles;
+6. Implementado o endpoint para listar os Usuarios e suas Roles;
 
 ### Configurando a autenticação Stateless
 
@@ -86,12 +86,22 @@
     .csrf().disable()
 ``` 
 
-3. Criação do `AutenticacaoController`
+#### Criação da classe dto `LoginRequest`;
+   
+   - Criação do método `converter`
+   ```kotlin
+   fun converter(): UsernamePasswordAuthenticationToken {
+        return UsernamePasswordAuthenticationToken(email, senha)//Uma implementação projetada para apresentação simples de um nome de usuário e senha
+    }
+   ```
 
-   1. Criação do método `autenticar(@RequestBody @Valid form: LoginForm): ResponseEntity<?>`
+#### Criação do `AutenticacaoController`
+
+1. Criação do método `autenticar(@RequestBody @Valid form: LoginForm): ResponseEntity<?>`
+   
     - O objetivo deste método é pegar o login e a senha, autenticar no sistema(verificar no banco) e estando tudo ok eu gero o token;
-   2. Criação da classe DTO `LoginForm`;
-   3. Liberar o caminho `/auth` em SecurityConfigurations: ` .antMatchers("/auth").permitAll()`
+   
+2. Liberar o caminho `/auth` em SecurityConfigurations: ` .antMatchers("/auth").permitAll()`
    
 #### No Spring, não é possível injetar automaticamente o `AuthenticationManager`
    
@@ -109,13 +119,8 @@ fun authenticationManager(auth: AuthenticationConfiguration): AuthenticationMana
 ```kotlin
 private val authManager: AuthenticationManager
 ```
-2. Criar a função `converter` na classe `LoginForm`;
-```kotlin
-fun converter(): UsernamePasswordAuthenticationToken {
-        return UsernamePasswordAuthenticationToken(email, senha)//Uma implementação projetada para apresentação simples de um nome de usuário e senha
-    }
-``` 
-3. No método `autenticar`    
+
+2. No método `autenticar`    
 ```kotlin
  @PostMapping
     fun autenticar(@RequestBody @Valid form: LoginForm): ResponseEntity<TokenDto>{//Criar a classe TokenDto
