@@ -169,20 +169,11 @@ fun gerarToken(authentication: Authentication): String {
     }
 ``` 
 
-3. Em `AutenticacaoController`, no método `autenticar`
-```kotlin
-val token = tokenService.gerarToken(authentication)
-``` 
-
-#### Retornando o token para o cliente
-
-1. Criação do `TokenDto`;
-2. `return ResponseEntity.ok(TokenDto(token, "Bearer"))` devolvo um objeto(token) e informo o tipo de autenticação no corpo da resposta;
-
 #### Recuperando o token do header Authorization
 
-1. Criação da classe `AutenticacaoViaTokenFilter(): OncePerRequestFilter()`;
-2. Implementando o método `doFilterInternal()`;
+1. Criação da classe `AutenticacaoViaTokenFilter: OncePerRequestFilter()`;
+
+2. Implementar o método `doFilterInternal()`;
 ```kotlin
      val token = recuperarToken(request)// Criar a função recuperarToken(3)
         println("TOKEN: $token")
@@ -217,19 +208,19 @@ fun isTokenValido(token: String?): Boolean {
     }
 ```
 
-5. Em `SecurityConfiguration` adicionar o filtro de autenticação
+5. Criar a função `getUsuario` em `TokenService`
 ```kotlin
-.and()
-.addFilterBefore(AutenticacaoViaTokenFilter(//Rodar primeiro o nosso filtro
-    tokenService = tokenService,
-    usuarioRepository = usuarioRepository),
-    UsernamePasswordAuthenticationFilter::class.java)
-``` 
+fun getUsuario(token: String?): String {
+    val claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body
+    return claims.subject
+    }
+```
+
 
 6. Implementar a função `autenticarCliente`
 ```kotlin
 private fun autenticarCliente(token: String?) {
-        val usuarioToken: String = tokenService.getUsuario(token)//(7)
+        val usuarioToken: String = tokenService.getUsuario(token)//(5)
         val usuario: Usuario? = usuarioRepository.findByEmail(usuarioToken)
         val authentication = UsernamePasswordAuthenticationToken(usuario, null, usuario?.authorities)
         SecurityContextHolder 
@@ -238,13 +229,14 @@ private fun autenticarCliente(token: String?) {
     }
 ```
 
-7. Criar a função `getUsuario`
+7. Em `SecurityConfiguration` adicionar o filtro de autenticação
 ```kotlin
-fun getUsuario(token: String?): String {
-    val claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body
-    return claims.subject
-    }
-```
+.and()
+.addFilterBefore(AutenticacaoViaTokenFilter(//Rodar primeiro o nosso filtro
+    tokenService = tokenService,
+    usuarioRepository = usuarioRepository),
+    UsernamePasswordAuthenticationFilter::class.java)
+``` 
 
 #### Profiles
 
