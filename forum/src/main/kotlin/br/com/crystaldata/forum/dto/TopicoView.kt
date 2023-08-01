@@ -1,6 +1,7 @@
 package br.com.crystaldata.forum.dto
 
-import br.com.crystaldata.forum.model.StatusTopico
+import br.com.crystaldata.forum.entity.StatusTopico
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -10,5 +11,5 @@ data class TopicoView(
     val mensagem: String,
     val status: StatusTopico,
     val dataCriacao: LocalDateTime,
-    val dataAlteracao: LocalDate?
-)
+    val dataAlteracao: LocalDate?,
+): Serializable

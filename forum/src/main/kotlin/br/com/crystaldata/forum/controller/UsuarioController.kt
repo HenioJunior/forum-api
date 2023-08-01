@@ -1,7 +1,6 @@
 package br.com.crystaldata.forum.controller
 
 import br.com.crystaldata.forum.dto.UsuarioView
-import br.com.crystaldata.forum.model.Usuario
 import br.com.crystaldata.forum.service.UsuarioService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

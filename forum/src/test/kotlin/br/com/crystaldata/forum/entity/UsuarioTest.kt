@@ -1,4 +1,4 @@
-package br.com.crystaldata.forum.model
+package br.com.crystaldata.forum.entity
 
 object UsuarioTest {
     fun build() = Usuario(id = 1, nome = "Joao", email = "jvc.martins", senha = "123")

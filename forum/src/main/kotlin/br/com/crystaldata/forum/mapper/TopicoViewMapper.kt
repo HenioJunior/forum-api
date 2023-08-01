@@ -1,7 +1,7 @@
 package br.com.crystaldata.forum.mapper
 
 import br.com.crystaldata.forum.dto.TopicoView
-import br.com.crystaldata.forum.model.Topico
+import br.com.crystaldata.forum.entity.Topico
 import org.springframework.stereotype.Component
 
 @Component

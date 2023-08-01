@@ -1,4 +1,4 @@
-package br.com.crystaldata.forum.model
+package br.com.crystaldata.forum.entity
 
 import br.com.crystaldata.forum.dto.TopicoView
 import java.time.LocalDate

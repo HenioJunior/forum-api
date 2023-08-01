@@ -1,6 +1,6 @@
 package br.com.crystaldata.forum.security
 
-import br.com.crystaldata.forum.model.Usuario
+import br.com.crystaldata.forum.entity.Usuario
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value

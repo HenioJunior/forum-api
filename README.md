@@ -1,5 +1,18 @@
 ## Notas
 
+### Infra necessário
+
+#### Redis
+docker run -p 6379:6379 --name redis redis:latest
+
+- Monitorando 
+docker exec -it redis sh
+redis-cli
+monitor
+
+#### Mysql
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=***** -d mysql:latest
+
 ### Criação da classe SecurityConfiguration
 
 1. Utilizar as anotações de classe: `@EnableWebSecurity` e `@Configuration`

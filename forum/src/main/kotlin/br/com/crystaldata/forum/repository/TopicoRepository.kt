@@ -1,7 +1,7 @@
 package br.com.crystaldata.forum.repository
 
 import br.com.crystaldata.forum.dto.TopicoPorCategoria
-import br.com.crystaldata.forum.model.Topico
+import br.com.crystaldata.forum.entity.Topico
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository

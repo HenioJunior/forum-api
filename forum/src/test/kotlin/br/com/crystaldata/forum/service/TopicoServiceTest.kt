@@ -3,8 +3,8 @@ package br.com.crystaldata.forum.service
 import br.com.crystaldata.forum.exception.NotFoundException
 import br.com.crystaldata.forum.mapper.TopicoFormMapper
 import br.com.crystaldata.forum.mapper.TopicoViewMapper
-import br.com.crystaldata.forum.model.TopicoTest
-import br.com.crystaldata.forum.model.TopicoViewTest
+import br.com.crystaldata.forum.entity.TopicoTest
+import br.com.crystaldata.forum.entity.TopicoViewTest
 import br.com.crystaldata.forum.repository.TopicoRepository
 import io.mockk.every
 import io.mockk.mockk

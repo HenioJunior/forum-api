@@ -1,6 +1,6 @@
 package br.com.crystaldata.forum.security
 
-import br.com.crystaldata.forum.model.Usuario
+import br.com.crystaldata.forum.entity.Usuario
 import br.com.crystaldata.forum.repository.UsuarioRepository
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder

@@ -1,4 +1,4 @@
-package br.com.crystaldata.forum.model
+package br.com.crystaldata.forum.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.userdetails.UserDetails

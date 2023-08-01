@@ -1,4 +1,4 @@
-package br.com.crystaldata.forum.model
+package br.com.crystaldata.forum.entity
 
 import java.time.LocalDate
 import java.time.LocalDateTime

@@ -1,11 +1,10 @@
-package br.com.crystaldata.forum.model
+package br.com.crystaldata.forum.entity
 
 import org.springframework.security.core.GrantedAuthority
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.Table
 
 @Entity
 data class Role(

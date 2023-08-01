@@ -1,6 +1,6 @@
 package br.com.crystaldata.forum.dto
 
-import br.com.crystaldata.forum.model.Role
+import br.com.crystaldata.forum.entity.Role
 
 data class UsuarioView(
     val nome: String,

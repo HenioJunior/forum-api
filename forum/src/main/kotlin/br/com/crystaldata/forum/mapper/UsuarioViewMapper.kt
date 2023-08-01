@@ -1,7 +1,7 @@
 package br.com.crystaldata.forum.mapper
 
 import br.com.crystaldata.forum.dto.UsuarioView
-import br.com.crystaldata.forum.model.Usuario
+import br.com.crystaldata.forum.entity.Usuario
 import org.springframework.stereotype.Component
 
 @Component

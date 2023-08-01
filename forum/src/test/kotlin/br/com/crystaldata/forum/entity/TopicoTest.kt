@@ -1,4 +1,4 @@
-package br.com.crystaldata.forum.model
+package br.com.crystaldata.forum.entity
 
 object TopicoTest {
     fun build() = Topico(
