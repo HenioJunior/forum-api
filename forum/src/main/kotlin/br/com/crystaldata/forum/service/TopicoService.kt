@@ -4,6 +4,7 @@ import br.com.crystaldata.forum.dto.AtualizacaoTopicoForm
 import br.com.crystaldata.forum.dto.NovoTopicoForm
 import br.com.crystaldata.forum.dto.TopicoPorCategoria
 import br.com.crystaldata.forum.dto.TopicoView
+import br.com.crystaldata.forum.entity.Topico
 import br.com.crystaldata.forum.exception.NotFoundException
 import br.com.crystaldata.forum.mapper.TopicoFormMapper
 import br.com.crystaldata.forum.mapper.TopicoViewMapper
@@ -39,6 +40,12 @@ class TopicoService(
             .orElseThrow { NotFoundException(notFoundMessage) }
         return topicoViewMapper.map(topico)
     }
+
+    fun findById(id: Long): Topico {
+        return repository.findById(id)
+            .orElseThrow { NotFoundException(notFoundMessage) }
+    }
+
 
     @CacheEvict(cacheNames = ["Topicos"], allEntries = true)
     fun cadastrar(form: NovoTopicoForm): TopicoView {

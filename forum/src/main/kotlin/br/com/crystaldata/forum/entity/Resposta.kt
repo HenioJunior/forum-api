@@ -6,12 +6,12 @@ import javax.persistence.*
 @Entity
 data class Resposta(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
+    var id: Long? = null,
     val mensagem: String,
     val dataResposta: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
-    val autor: Usuario,
+    val usuario: Usuario,
     @ManyToOne
     val topico: Topico,
-    val solucao: Boolean
+    val solucao: Int
 )

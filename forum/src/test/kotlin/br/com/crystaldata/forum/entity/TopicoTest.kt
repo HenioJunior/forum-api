@@ -6,6 +6,6 @@ object TopicoTest {
         titulo = "Kotlin Basico",
         mensagem = "Aprendendo kotlin basico",
         curso = CursoTest.build(),
-        autor = UsuarioTest.build()
+        usuario = UsuarioTest.build()
     )
 }

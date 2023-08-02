@@ -16,8 +16,8 @@ class TopicoFormMapper(
         return Topico(
             titulo = t.titulo,
             mensagem = t.mensagem,
-            curso = cursoService.buscaPorId(t.idCurso),
-            autor = usuarioService.buscaPorId(t.idAutor)
+            curso = cursoService.buscaPorId(t.cursoId),
+            usuario = usuarioService.buscaPorId(t.usuarioId)
         )
     }
 }
