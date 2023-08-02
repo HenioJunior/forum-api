@@ -19,6 +19,21 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: 879c205a974242
+    password: be608c65cd98ef
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
 jwt:
   secret: P@ssw0rd

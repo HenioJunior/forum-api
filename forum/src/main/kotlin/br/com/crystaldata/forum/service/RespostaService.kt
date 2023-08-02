@@ -12,11 +12,16 @@ import org.springframework.stereotype.Service
 @Service
 class RespostaService(
     private val respostaRepository: RespostaRepository,
-    private val respostaDtoMapper: RespostaDtoMapper
+    private val respostaDtoMapper: RespostaDtoMapper,
+    private val emailService: EmailService
 
 ) {
 
     fun salvar(respostaDto: RespostaDto) {
-        respostaRepository.save(respostaDtoMapper.map(respostaDto))
+        val resposta = respostaDtoMapper.map(respostaDto)
+        respostaRepository.save(resposta)
+
+        val usuario = resposta.usuario.email
+        emailService.notificar(usuario);
     }
 }
