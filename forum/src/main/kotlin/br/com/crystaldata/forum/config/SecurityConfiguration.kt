@@ -28,9 +28,9 @@ class SecurityConfiguration(
         http
             .csrf().disable()
             .authorizeRequests { authz -> authz
+                .antMatchers("/topicos").hasAuthority("LEITURA_ESCRITA")
+                .antMatchers("/relatorios").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers("/topicos")
-                .hasAuthority("LEITURA_ESCRITA")
                 .anyRequest()
                 .authenticated()
             }
