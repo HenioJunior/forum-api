@@ -2,7 +2,7 @@ package br.com.crystaldata.forum.service
 
 import br.com.crystaldata.forum.dto.AtualizacaoTopicoForm
 import br.com.crystaldata.forum.dto.NovoTopicoForm
-import br.com.crystaldata.forum.dto.TopicoPorCategoria
+import br.com.crystaldata.forum.dto.TopicoPorCategoriaDto
 import br.com.crystaldata.forum.dto.TopicoView
 import br.com.crystaldata.forum.entity.Topico
 import br.com.crystaldata.forum.exception.NotFoundException
@@ -69,7 +69,7 @@ class TopicoService(
        repository.deleteById(id)
     }
 
-    fun relatorio(): List<TopicoPorCategoria> {
+    fun relatorio(): List<TopicoPorCategoriaDto> {
         return repository.relatorio()
     }
 }

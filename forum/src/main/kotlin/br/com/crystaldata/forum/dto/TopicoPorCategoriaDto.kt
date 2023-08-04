@@ -1,6 +1,6 @@
 package br.com.crystaldata.forum.dto
 
-data class TopicoPorCategoria(
+data class TopicoPorCategoriaDto(
     val categoria: String,
     val quantidade: Long
 )

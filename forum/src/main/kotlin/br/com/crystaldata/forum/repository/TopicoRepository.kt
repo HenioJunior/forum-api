@@ -1,6 +1,6 @@
 package br.com.crystaldata.forum.repository
 
-import br.com.crystaldata.forum.dto.TopicoPorCategoria
+import br.com.crystaldata.forum.dto.TopicoPorCategoriaDto
 import br.com.crystaldata.forum.entity.Topico
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -11,6 +11,6 @@ interface TopicoRepository: JpaRepository<Topico, Long> {
 
     fun findByCursoNome(nomeCurso: String, paginacao: Pageable): Page<Topico>
 
-    @Query("SELECT new br.com.crystaldata.forum.dto.TopicoPorCategoria(curso.categoria, count(t)) FROM Topico t JOIN t.curso curso GROUP BY curso.categoria ")
-    fun relatorio(): List<TopicoPorCategoria>
+    @Query("SELECT new br.com.crystaldata.forum.dto.TopicoPorCategoriaDto(curso.categoria, count(t)) FROM Topico t JOIN t.curso curso GROUP BY curso.categoria ")
+    fun relatorio(): List<TopicoPorCategoriaDto>
 }

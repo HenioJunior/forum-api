@@ -2,7 +2,7 @@ package br.com.crystaldata.forum.controller
 
 import br.com.crystaldata.forum.dto.AtualizacaoTopicoForm
 import br.com.crystaldata.forum.dto.NovoTopicoForm
-import br.com.crystaldata.forum.dto.TopicoPorCategoria
+import br.com.crystaldata.forum.dto.TopicoPorCategoriaDto
 import br.com.crystaldata.forum.dto.TopicoView
 import br.com.crystaldata.forum.service.TopicoService
 import org.springframework.data.domain.Page
@@ -59,7 +59,7 @@ class TopicoController(private val service: TopicoService) {
     }
 
     @GetMapping("/relatorio")
-    fun relatorio(): List<TopicoPorCategoria> {
+    fun relatorio(): List<TopicoPorCategoriaDto> {
         return service.relatorio()
     }
 }
