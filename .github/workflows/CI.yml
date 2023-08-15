@@ -42,8 +42,7 @@ jobs:
 
       - name: Push to Docker Hub Container Registry
         run: |
-          docker tag ${{ secrets.DOCKER_USERNAME }}/forum-api:latest ${{ secrets.DOCKER_USERNAME }}/forum-api:${{github.run_id}}
-          
-          docker push ${{ secrets.DOCKER_USERNAME }}:${{github.run_id}}
-          docker push ${{ secrets.DOCKER_USERNAME }}:latest
+          docker tag heniojunior/forum-api:latest heniojunior/forum-api:${{github.run_id}}   
+          docker push heniojunior/forum-api:${{github.run_id}}
+          docker push heniojunior/forum-api:latest
 
