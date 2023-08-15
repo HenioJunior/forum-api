@@ -5,6 +5,7 @@ import br.com.crystaldata.forum.dto.NovoTopicoForm
 import br.com.crystaldata.forum.dto.TopicoPorCategoriaDto
 import br.com.crystaldata.forum.dto.TopicoView
 import br.com.crystaldata.forum.service.TopicoService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -17,6 +18,7 @@ import javax.transaction.Transactional
 import javax.validation.Valid
 
 @RestController
+@SecurityRequirement(name="bearerAuth")
 @RequestMapping("/topicos")
 class TopicoController(private val service: TopicoService) {
 

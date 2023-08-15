@@ -28,9 +28,12 @@ class SecurityConfiguration(
         http
             .csrf().disable()
             .authorizeRequests { authz -> authz
+                .antMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                 .antMatchers("/topicos").hasAuthority("LEITURA_ESCRITA")
                 .antMatchers("/relatorios").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
             }
